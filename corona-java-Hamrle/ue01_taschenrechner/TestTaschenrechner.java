@@ -7,10 +7,10 @@ public class TestTaschenrechner
 	public static void main(String[] args)
 	{
 	Scanner reader = new Scanner(System.in);
-	System.out.println("Wert a:");
+	System.out.print("Wert a:");
 	Taschenrechner.a = reader.nextDouble();
 		
-	System.out.println("Wert b:");
+	System.out.print("Wert b:");
 	Taschenrechner.b = reader.nextDouble();
 	reader.close();
 		
