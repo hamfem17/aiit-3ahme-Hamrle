@@ -1,306 +1,332 @@
-/**
-	 * 1.) Primitive Datentypen
-	 * 
-	 * Datentypen		Laenge
-	 * 
-	 * boolean				1
-	 * char					2
-	 * byte					1
-	 * short				2
-	 * int					4
-	 * long					8
-	 * float				4
-	 * double				8
-	 * 
-	 * 2.) Die Fließkommazahlen
-	 * 
-	 * MAX_VALUE				Größter darstellbarer positiver Wert 
-	 * MIN_VALUE				Kleinster darstellbarer positiver Wert
-	 * NaN						Not-A-Number 
-	 * NEGATIVE_INFINITY		Negativ unendlich
-	 * POSITIVE_INFINITY		Positiv unendlich 
-	 * 
-	 */
+package laborSx;
 
-import java.io.*;
 
-public class ue1
+import java.util.Date;
+
+
+class Auto
 {
-	public static byte fromUnsignedInt(int value)
+	public String name;
+	public int    erstzulassung;
+	public int    leistung;
+}
+
+class Father
+{
+	private String s1 = labor.getAndPrint("Father.s1");
+	public Father()
 	{
-		return (byte)value;
+		labor.getAndPrint("Father.<init>");
 	}
-	public static byte fromChar(char c)
+}
+
+class Son
+extends Father
+{
+	private String s1 = labor.getAndPrint("Son.s1");
+	public Son()
 	{
-		return (byte)(c & 0xFF);
+		labor.getAndPrint("Son.<init>");
 	}
-	public static int toUnsignedInt(byte value)
+}
+
+
+class Cabrio
+extends Auto
+{
+	int vdauer;
+}
+
+class ZweisitzerCabrio
+extends Cabrio
+{
+   boolean notsitze;
+   public int alter()
+   {
+	   return 12 * (2000 - erstzulassung);
+   }
+}
+
+class ClassWithPrivateA
+{
+	private int a;
+
+	public ClassWithPrivateA(int a)
 	{
-		return (value & 0x7F) + (value < 0 ? 128 : 0);
+		this.a = a;
 	}
-	public static char toChar(byte value)
+	public void setOtherA(ClassWithPrivateA other, int newvalue)
 	{
-		return (char)toUnsignedInt(value);
+		other.a = newvalue;
 	}
-	public static String toBitString(byte value)
+	public String toString()
 	{
-		char[] chars = new char[8];
-		int mask = 1;
-		for (int i = 0; i < 8; ++i)
-		{
-			chars[7 - i] = (value & mask) != 0 ? '1' : '0';
-			mask <<= 1;
-		}
-		return new String(chars);
+		return "" + a;
 	}
-	public static void Test1(int i)
+}
+
+class Test
+{
+	static int i;
+	static int j;
+	static
 	{
-		int k;
-		if (i >= 2)
-		{
-			k = 5;
-		}else
-		{
-			k = 0;
-		}
-		System.out.println(k);
+		i = 5;
+		j = 3 * i;
 	}
-	public static void Test2(int i)
+}
+
+
+abstract class Mitarbeiter
+{
+	int persnr;
+	String name;
+	Date eintritt;
+
+	public Mitarbeiter()
 	{
-		int k = 0;
-		if (i < 2)
-		{
-			k = 1;
-		}
-		
-		if (i > 2)
-		{
-			k = 6;
-		}
-		System.out.println(k);
 	}
-	public static void Test3()
+	public abstract double monatsBrutto();
+}
+
+class Arbeiter
+extends Mitarbeiter
+{
+	double stundenlohn;
+	double anzahlstunden;
+	double ueberstundenzuschlag;
+	double anzahlueberstunden;
+	double schichtzulage;
+	public double monatsBrutto()
 	{
-	int a = 5;
-	double x = 3.14;
+		return stundenlohn*anzahlstunden+
+				ueberstundenzuschlag*anzahlueberstunden+
+				schichtzulage;
+	}
+}
+
+
+class Angestellter
+extends Mitarbeiter
+{
+	double grundgehalt;
+	double ortszuschlag;
+	double zulage;
+	public double monatsBrutto()
+	{
+		return grundgehalt+ortszuschlag+zulage;
+}
+}
+
+
+class Manager
+extends Mitarbeiter
+{
+	double fixgehalt;
+	double provision1;
+	double provision2;
+	double umsatz1;
+	double umsatz2;
+	public double monatsBrutto()
+	{
+		return fixgehalt+umsatz1*provision1/100+
+				umsatz2*provision2/100;
+	}
+}
+
+class GFManager
+extends Manager
+{
+	double gfzulage;
+
+	public double monatsBrutto()
+	{
+		return super.monatsBrutto()+gfzulage;
+	}
+}
+
+
+class SingleValue
+{
+	protected int value1;
+
+	public SingleValue(int value1)
+	{
+		this.value1 = value1;
+		print();
+	}
+	public void print()
+	{
+		System.out.println("value = " + value1);
+	}
+}
+
+
+class ValuePair
+extends SingleValue
+{
+	protected int value2;
+
+	public ValuePair(int value1, int value2)
+	{
+		super(value1);
+		this.value2 = value2;
+	}
+	public void print()
+	{
+		System.out.println("value = (" + value1 + "," + value2 + ")");
+	}
+}
+
+
+public class labor
+{
+	public String name;
+	public int    erstzulassung;
+	public int    leistung;
+	public int	  vdauer;
 	
-	System.out.println("a = " + a);
-	System.out.println("x = " + x);
-	}
-	class Punkt
+	public void Auto(String name)
 	{
-		int x;
-		int y;
-		
-		Punkt(int x, int y)
-		{
-			this.x = x;
-			this.y = y;
+		this.name = name;
+	}
+	public void Auto(String name,int erstzulassung, int leistung)
+	{
+		this.name = name;
+		this.erstzulassung = erstzulassung;
+		this.leistung = leistung;
+	}
+	public int alter()
+	{
+		return 2000 - this.erstzulassung;
+	}
+	public void printAlter(int wieoft)
+	{
+		while (wieoft-- > 0) {
+			System.out.println("Alter = " + alter());
 		}
 	}
-	public class SimpleIntList
+	public int alter(String titel)
 	{
-		private int[] data;
-		private int   len;
+		int alter = alter();
+		System.out.println(titel+alter);
+		return alter;
+	}
 	
-		public SimpleIntList(int size)
-		{
-			this.data = new int[size];
-			this.len  = 0;
-		}
-		public void add(int value)
-		{
-			if (full())
-			{ 
-				throw new RuntimeException("Liste voll");
-			}
-			data[len++] = value;
-			assert !empty(); 
-		}
-		public void bubblesort()
-		{
-			if (!empty())
-			{
-				int cnt = 0;
-				while (true)
-				{
-					assert cnt++ < len: "Zu viele Iterationen"; 
-					boolean sorted = true;
-					for (int i = 1; i < len; ++i)
-					{
-						if (sortTwoElements(i - 1, i))
-						{
-							sorted = false;
-						}
-					}
-					if (sorted)
-					{
-						break;
-					}
-				}
-			}
-		}
-		public boolean empty()
-		{
-			return len <= 0;
-		}
-		public boolean full()
-		{
-		return len >= data.length;
-		}
-		private boolean sortTwoElements(int pos1, int pos2)
-		{
-			assert (pos1 >= 0 && pos1 < len); 
-			assert (pos2 >= 0 && pos2 < len); 
-			boolean ret = false;
-			if (data[pos1] > data[pos2])
-			{
-				int tmp = data[pos1];
-				data[pos1] = data[pos2];
-				data[pos2] = tmp;
-				ret = true;
-			}
-			
-			assert data[pos1] <= data[pos2] : "Sortierfehler"; 
-			return ret;
-		}
+	
+	public static String getAndPrint(String s)
+	{
+		System.out.println(s);
+		return s;
 	}
+
+
+	static private int objcnt = 0;
+	public labor()
+	{
+		++objcnt;
+	}
+	public void finalize()
+	{
+		--objcnt;
+	}
+	
+	
+	private static final double STEUERSATZ = 18.9;
+	
+	
+	private static final int ANZ_MA = 100;
+	private static Mitarbeiter[] ma;
+	private static double bruttosumme;
 	
 	
 	public static void main(String[] args)
 	{
-		int a = 1;
-		char b = 'x';
-		double c = 3.1415;
-		boolean d = false;
+		labor meinKombi;
+		meinKombi = new labor();
+		labor meinKombi2 = new labor();
 		
-		System.out.println(a);
-		System.out.println(b);
-		System.out.println(c);
-		System.out.println(d);
+		meinKombi.name = "Mercedes 600";
+		meinKombi.erstzulassung = 1972;
+		meinKombi.leistung = 250;
 		
-		int[] x = {1,2,3,4,5};
-		int[] e;
-		double[] f;
-		boolean[] g;
-		boolean[] y = {true, true};
+		meinKombi2.name = "Mercedes";
+		meinKombi2.erstzulassung = 2000;
+		meinKombi2.leistung = 400;
 		
-		e = new int[5];
-		f = new double[10];
-		g = new boolean[15];
-		
-		int[] h = new int[5];
-		boolean[] i = {true,false};
-		h[0] = 2;
-		h[1] = 3;
-		h[2] = 5;
-		h[3] = 7;
-		h[4] = 11;
-		
-		System.out.println("\nh hat "+h.length+" Elemente");
-		System.out.println("i hat "+i.length+" Elemente");
-		System.out.println(h[0]);
-		System.out.println(h[1]);
-		System.out.println(h[2]);
-		System.out.println(h[3]);
-		System.out.println(h[4]);
-		System.out.println(i[0]);
-		System.out.println(i[1]);
+		System.out.println("Name........: "+meinKombi.name);
+		System.out.println("Zugelassen..: "+meinKombi.erstzulassung);
+		System.out.println("Leistung....: "+meinKombi.leistung);
 		System.out.println();
 		
-		int[][] j = new int[3][3];
-		
-		j[0][0] = 1;
-		j[0][1] = 2;
-		j[0][2] = 3;
-		j[1][0] = 4;
-		j[1][1] = 5;
-		j[1][2] = 6;
-		j[2][0] = 7;
-		j[2][1] = 8;
-		j[2][2] = 9;
-		
-		System.out.println(""+j[0][0]+j[0][1]+j[0][2]);
-		System.out.println(""+j[1][0]+j[1][1]+j[1][2]);
-		System.out.println(""+j[2][0]+j[2][1]+j[2][2]);
+		System.out.println("Name........: "+meinKombi2.name);
+		System.out.println("Zugelassen..: "+meinKombi2.erstzulassung);
+		System.out.println("Leistung....: "+meinKombi2.leistung);
 		System.out.println();
 		
-		int[][] k = { {0},
-					  {1,2},
-					  {3,4,5},
-					  {6,7,8,9}
-					};
-		for (int l = 0; l < k.length; ++l)
-		{
-			for (int m = 0; m < k[l].length; ++m)
-			{
-				System.out.print(k[l][m]);
-			}
-			System.out.println();
-		}
-		System.out.println();
-		for (int n = 0; n < 256; ++n)
-		{
-			byte o = ue1.fromUnsignedInt(n);
-			char p = ue1.toChar(o);
-			
-			System.out.print(" n =" + n);
-			System.out.print(" o =" + ue1.toBitString(o));
-			System.out.print(" p =" + (p >= 32 ? p : '.'));
-			System.out.println();
-		}
 		
-		ue1.Test1(4);
-		ue1.Test2(1);
-		ue1.Test3();
-		
-		System.out.println("\n3 + 4 = " + 3 + 4);
-		System.out.println("3 + 4 = " + (3 + 4));
-		
-		String q = new String("hallo");
-		String r = new String("hallo");
-		System.out.println("a == b liefert " + (q == r));
-		System.out.println("a != b liefert " + (q != r));
+		labor golf1 = new labor();
+		golf1.erstzulassung = 1990;
+		System.out.println(golf1.alter());
 		System.out.println();
 		
-		int s = 55;
-		int t = 97;
-		if ((s & 15) < (t & 15))
-		{ 
-			System.out.println("LowByte(55) < LowByte(97)");
-		}
-		else
-		{
-			System.out.println("LowByte(55) >= LowByte(97)");
-		}
 		
-		int[][] data = new int[10][10];
+		Son son = new Son();
+		System.out.println();
+		
+		
+		labor kfz1 = new labor();
+		kfz1.name = "MX5";
+		kfz1.erstzulassung = 1994;
+		kfz1.leistung = 115;
+		kfz1.vdauer = 120;
+		System.out.println("Alter = "+kfz1.alter());
+		
+		
+		ZweisitzerCabrio kfz2 = new ZweisitzerCabrio();
+		kfz2.name = "911-T";
+		kfz2.erstzulassung = 1982;
+		kfz2.leistung = 94;
+		kfz2.vdauer = 50;
+		kfz2.notsitze = true;
+		System.out.println("Alter = "+kfz1.alter());
+		System.out.println();
+		
+		ClassWithPrivateA a1 = new ClassWithPrivateA(7);
+		ClassWithPrivateA a2 = new ClassWithPrivateA(11);
+		a2.setOtherA(a1, 999);
+		System.out.println("a1 = " + a1.toString());
+		System.out.println("a2 = " + a2.toString());
+		
 
-		//Multiplikationstafel erstellen
-		for (int u = 1; u <= 10; ++u)
-		{
-			for (int v = 1; v <= 10; ++v)
-			{
-				data[u - 1][v - 1] = u * v;
-			}
-		}
-		
-		//Produkt größer 43 suchen 
-		loop1:
-		for (int u = 1; u <= 10; ++u)
-		{
-			for (int v = 1; v <= 10; ++v)
-			{
-				if (data[u - 1][v - 1] > 43)
-				{
-					System.out.println(u + "*" + v + "=" + (u * v));
-					break loop1;
-				}
-			}
-		}
-		System.out.println();
-		
-		ue1.SimpleIntList;
-		
+		 labor auto1;
+		 labor auto2 = new labor();
+		 System.out.println("Anzahl Testauto-Objekte: " + labor.objcnt);
+		 System.out.println();
+		 System.out.println();
+		 
+		 
+		 double x, y;
+		 for (x = 0.0; x <= 10.0; x = x + 1.0)
+		 {
+			 y = Math.sqrt(x);
+			 System.out.println("sqrt("+x+") = "+y);
+		 }
+		 
+		 ma = new Mitarbeiter[ANZ_MA];
+		 bruttosumme = 0.0;
+		 
+		 /**
+		  * for (int i = 0; i < ma.length; ++i)
+		  * {
+		  * bruttosumme = ma[i].monatsBrutto() + bruttosumme;
+		  * }
+		  */
+		 
+		 System.out.println("Bruttosumme = "+bruttosumme);
+		 
+		 
+		 new ValuePair(10,20);
 	}
 }
+
