@@ -1,24 +1,18 @@
 package ue5_25_05_2020;
 
-import java.util.Locale;
 
-public class Kugel extends Koerper
+public final class Kugel extends Koerper
 {
+
     public double r;
     
     public Kugel(double r)
     {
-        super(0.0);
-        if (r <= 0)
-        {
-            throw new IllegalArgumentException("invalid parameter r");
-        }
-        this.r = r;
+        super(Koerper.DICHTE_EICHE);
     }
     public Kugel(double r,double dichte)
     {
         super(dichte);
-        this.r = r;
     }
     public double getR()
     {
@@ -28,7 +22,6 @@ public class Kugel extends Koerper
     {
         this.r = r;
     }
-    
     @Override
     public double oberflache()
     {
@@ -40,8 +33,7 @@ public class Kugel extends Koerper
         return (4.0/3.0)*(22.0/7.0)*(r*r*r);
     }
     @Override
-    public String toString()
-    {
-        return String.format(Locale.ENGLISH, "{\"r\":%e,\"dichte\":%e}", r, dichte);
+    public String toString() {
+        return "Kugel{" + "r=" + r + '}';
     }
 }
