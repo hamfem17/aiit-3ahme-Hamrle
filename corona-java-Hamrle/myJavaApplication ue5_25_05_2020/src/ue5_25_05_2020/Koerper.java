@@ -1,18 +1,14 @@
 package ue5_25_05_2020;
 
 
-public abstract class Koerper
+public class Koerper
 {
-    protected double dichte;
-    public static final double DICHTE_EICHE = 670;
-    public static final double DICHTE_BUCHE = 690;
+    private double dichte;
+    public static double DICHTE_EICHE = 670;
+    public static double DICHTE_BUCHE = 690;
 
-    public Koerper(double dichte) throws IllegalArgumentException
+    public Koerper(double dichte)
     {
-        if (dichte < 0)
-        {
-            throw new IllegalArgumentException("invalid parameter dichte");
-        }
         this.dichte = dichte;
     }
 
@@ -26,16 +22,19 @@ public abstract class Koerper
         this.dichte = dichte;
     }
     
-    public abstract double oberflache();
-
-    public abstract double volumen();
-    
     public double masse()
     {
         return dichte * volumen();
     }
     
-
+    public double oberflache()
+    {
+        return dichte;
+    }
     
+    public double volumen()
+    {
+        return dichte;
+    }
     
 }
