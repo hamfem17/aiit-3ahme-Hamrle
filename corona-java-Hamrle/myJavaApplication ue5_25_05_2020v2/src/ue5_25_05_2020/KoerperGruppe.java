@@ -7,17 +7,17 @@ import java.util.List;
 public class KoerperGruppe
 {
     private final List<Koerper> koerperList = new ArrayList<>();
+    setDichte(dichte);
     private double dichte;
-
-    public KoerperGruppe()
-    {
-        
-    }
     
     public KoerperGruppe (Collection<Koerper> koerperList, double dichte)
     {
         this.koerperList.addAll(koerperList);
-        setDichte(dichte);
+        this.dichte = dichte;
+        for (Koerper k : this.koerperList)
+        {
+            k.setDichte(dichte);
+        }
     }
 
     public int size()
@@ -32,7 +32,6 @@ public class KoerperGruppe
 
     public boolean add(Koerper k)
     {
-        k.setDichte(dichte);
         return koerperList.add(k);
     }
 
@@ -45,7 +44,7 @@ public class KoerperGruppe
         return dichte;
     }
 
-    public final void setDichte(double dichte) {
+    public void setDichte(double dichte) {
         this.dichte = dichte;
         for (Koerper k : this.koerperList)
         {
@@ -53,11 +52,6 @@ public class KoerperGruppe
         }
     }
 
-    public List<Koerper> getKoerperListe ()
-    {
-        return koerperList;
-    }
-    
     public Koerper[] toArray()
     {
         Koerper [] rv = new Koerper [koerperList.size()];
@@ -65,44 +59,6 @@ public class KoerperGruppe
         return rv;
     }
     
-    public double gesamtMasse()
-    {
-        double rv = 0.0;
-        for(Koerper k: koerperList)
-        {
-            rv += k.masse();
-        }
-        return rv;
-    }
-    
-    public double gesamtVolumen()
-    {
-        double rv = 0.0;
-        for(Koerper k: koerperList)
-        {
-            rv += k.volumen();
-        }
-        return rv;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder(100);
-        sb.append("[\n");
-        boolean firstLine = true;
-        for (Koerper k : koerperList)
-        {
-            if (firstLine)
-            {
-                firstLine = false;
-            }else{
-                sb.append(",\n");
-            }
-            sb.append("   ").append(k.toString());
-        }
-        sb.append("\n]");
-        return sb.toString();
-    }
-    
-
 }
+
+//Time 22:15
