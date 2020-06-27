@@ -1,26 +1,19 @@
 package ue5_25_05_2020;
 
-import java.util.Locale;
 
-
-public class Wuerfel extends Koerper
+public final class Wuerfel extends Koerper
 {
-    private double a;
+    public double a;
 
-    public Wuerfel (double a)
+    public Wuerfel(double a)
     {
-        super(0.0);
-        if (a <= 0)
-        {
-            throw new IllegalArgumentException("invalid parameter a");
-        }
-        this.a = a;
+        super(Koerper.DICHTE_EICHE);
     }
     
-    public Wuerfel(double a, double dichte) throws IllegalArgumentException
+    public Wuerfel(double a, double dichte)
     {
         super(dichte);
-        this.a = a;
+        setA(a);
     }
 
     public double getA()
@@ -43,12 +36,4 @@ public class Wuerfel extends Koerper
     {
         return (a*a*a);
     }
-
-    @Override
-    public String toString()
-    {
-        return String.format(Locale.ENGLISH, "{\"a\":%e,\"dichte\":%e}", a, dichte);
-    }
-    
-    
 }
